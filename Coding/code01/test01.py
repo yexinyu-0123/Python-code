@@ -3,6 +3,10 @@
 """
 # !/usr/bin/python
 import re
+from osgeo import gdal
+from osgeo import ogr
+from selenium import webdriver
+from selenium.webdriver import Chrome
 
 # 类之间的调用
 
@@ -53,3 +57,63 @@ print('\n打印输出-----------：')
 print(re.match('www', 'www.runoob.com'))
 print(re.match('www', 'www.runoob.com').span())  # 在起始位置匹配
 print(re.match('com', 'www.runoob.com'))  # 不在起始位置匹配
+
+driver = Chrome()
+driver.get('')
+
+'''查找元素的所有方法'''
+# 前端代码如下：
+# <span class="bg s_ipt_wr quickdelete-wrap">
+#     <span class="soutu-btn"></span>
+#     <input id="kw" class="s_ipt" autocomplete="off" maxlength="255" value="" name="wd">
+#     <a id="quickdelete" class="quickdelete" href="javascript:;" title="清空" style="top: 0px; right: 0px; display: none;"></a>
+# </span>
+# <span class="bg s_btn_wr">
+#     <input id="su" class="bg s_btn" type="submit" value="百度一下">
+# </span>
+
+driver.find_element_by_xpath()
+driver.find_element()
+driver.find_element_by_id("kw")  # 使用id查找
+driver.find_element_by_name('wd')
+driver.find_element_by_class_name("s_btn")
+# 利用元素属性来进行xpath定位
+driver.find_element_by_xpath("//input[@id='kw']")
+#  标签名input也可以用*来代替,只要是在该标签内，任意属性都可以
+driver.find_element_by_xpath("//*[@name='wd']")
+#  CSS属性定位可以比较灵活地选择控件的任意属性，定位方式也会比xpath快
+#  一般class是用.标记，id是用#标记，标签名直接写具体标签名
+driver.find_element_by_css_selector('.s_ipt')
+driver.find_element_by_css_selector("#su")
+# css定位里面也可以通过属性或者组合方式定位：
+driver.find_element_by_css_selector("input[autocomplete='off']")
+# 这样写的定位顺序是这样的，先定位到一个class名为bg s_btn_wr的span标签，
+# 在这个标签下面有一个id为su的input标签，这样就定位到了
+driver.find_element_by_css_selector("span.bg.s_btn_wr>input#su")
+# 在CSS里面下级标签用>链接，如果class中有空格，空格用.表示
+driver.find_element_by_link_text()
+driver.find_element_by_partial_link_text()
+
+# By定位
+from selenium.webdriver.common.by import By
+
+driver.find_element(By.ID, "kw")
+driver.find_element(By.NAME, "wd")
+driver.find_element(By.CLASS_NAME, "s_ipt")
+driver.find_element(By.TAG_NAME, "input")
+driver.find_element(By.LINK_TEXT, u"新闻")
+driver.find_element(By.PARTIAL_LINK_TEXT, u"新")
+driver.find_element(By.XPATH, "//*[@class='bg s_btn']")
+driver.find_element(By.CSS_SELECTOR, "span.bg s_btn_wr>input#su")
+
+
+
+
+
+
+
+
+
+
+
+
